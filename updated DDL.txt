@@ -1,0 +1,83 @@
+CREATE DATABASE  FACEBOOK   ;
+USE  FACEBOOK;
+
+CREATE TABLE MEMBER
+(
+member_id int (2)  AUTO_INCREMENT PRIMARY KEY ,
+email VARCHAR (100) NOT NULL UNIQUE,
+password VARCHAR (50) NOT NULL,
+first_name VARCHAR (30) NOT NULL,
+last_name VARCHAR (30) NOT NULL,
+gender VARCHAR (10) NOT NULL,
+birthdate DATE,
+phone_number int (15),
+hometown VARCHAR (50) NOT NULL,
+marital_status VARCHAR (10) ,
+about_me TEXT,
+profile_pic LONGBLOB 
+
+ );
+
+
+
+
+CREATE TABLE POST
+(
+post_id int (2) AUTO_INCREMENT PRIMARY KEY, 
+member_id int (2)NOT NULL,
+caption TEXT,
+post_date TIMESTAMP,
+image  LONGBLOB,
+is_public VARCHAR (10) 
+);
+
+
+CREATE TABLE POST_LIKE
+(
+member_id int (2),
+post_id int (2) ,
+Like_date TIMESTAMP  ,
+PRIMARY KEY(member_id ,post_id ) 
+); 
+
+
+
+
+CREATE TABLE FRIEND_REQ
+(
+member_id int (2),
+req_mem_id int (2),
+req_date TIMESTAMP,
+PRIMARY KEY(member_id ,req_mem_id )
+);
+
+
+CREATE TABLE FRIEND_LIST
+(
+member_id int (2),
+friend_id int (2),
+PRIMARY KEY(member_id ,friend_id )
+);
+
+
+ALTER TABLE POST ADD FOREIGN KEY ( member_id ) REFERENCES MEMBER (member_id );
+
+ALTER TABLE POST_LIKE ADD FOREIGN KEY (member_id  ) REFERENCES MEMBER(member_id );
+
+ALTER TABLE FRIEND_REQ ADD FOREIGN KEY ( member_id  ) REFERENCES MEMBER (member_id  );
+
+
+
+ALTER TABLE FRIEND_REQ ADD FOREIGN KEY ( req_mem_id ) REFERENCES MEMBER (member_id  );
+
+
+ALTER TABLE FRIEND_LIST ADD FOREIGN KEY ( member_id  ) REFERENCES MEMBER (member_id   );
+
+
+
+
+ALTER TABLE FRIEND_LIST ADD FOREIGN KEY ( friend_id ) REFERENCES MEMBER (member_id   );
+
+ALTER TABLE POST_LIKE ADD FOREIGN KEY ( post_id ) REFERENCES POST (post_id );
+
+
